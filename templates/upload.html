@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload CSV/XLSX</title>
+</head>
+<body>
+    <h1>Upload CSV or XLSX File</h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv, .xlsx" required>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>

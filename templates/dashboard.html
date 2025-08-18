@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · Finance AI{% endblock %}
+{% block content %}
+<h1>Welcome, {{ user.email }}</h1>
+
+<section class="cards">
+  <div class="card">Recent Income: ₹{{ '%.0f'|format(income) }}</div>
+  <div class="card">Recent Expense: ₹{{ '%.0f'|format(expense) }}</div>
+</section>
+
+<section>
+  <h2>Upload CSV</h2>
+  <form method="post" action="{{ url_for('dashboard.upload_csv') }}" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv" required>
+    <button type="submit">Import</button>
+  </form>
+</section>
+
+<section>
+  <h2>Recent Transactions</h2>
+  <table>
+    <thead><tr><th>Date</th><th>Cat</th><th>Type</th><th>Amount</th><th>Description</th></tr></thead>
+    <tbody>
+      {% for t in txs %}
+      <tr>
+        <td>{{ t.date }}</td>
+        <td>{{ t.categories.name if t.categories }}</td>
+        <td>{{ t.type }}</td>
+        <td>₹{{ '%.0f'|format(t.amount) }}</td>
+        <td>{{ t.description }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Ask AI</h2>
+  <div id="chat">
+    <textarea id="chat-input" rows="3" placeholder="Ask about your spending..."></textarea>
+    <button id="chat-send">Ask</button>
+    <div id="chat-output"></div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,11 @@
+Date,Category,Description,Amount,Type
+01-08-2025,Salary,January Salary,50000,Income
+03-08-2025,Food,Lunch at Cafe,250,Expense
+04-08-2025,Transport,Uber Ride,120,Expense
+06-08-2025,Investment,Stock Dividend,1500,Income
+07-08-2025,Entertainment,Movie Tickets,500,Expense
+10-08-2025,Shopping,New Shoes,3000,Expense
+15-08-2025,Salary,Half-month Bonus,2000,Income
+18-08-2025,Utilities,Electricity Bill,1200,Expense
+20-08-2025,Groceries,Monthly Grocery,4000,Expense
+25-08-2025,Other,Gift Received,1000,Income

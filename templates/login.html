@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Login · Finance AI{% endblock %}
+{% block content %}
+<h1>{{ 'Register' if register else 'Login' }}</h1>
+<form method="post" action="{{ url_for('auth.register_post' if register else 'auth.login_post') }}">
+  <label>Email</label>
+  <input name="email" type="email" required>
+  <label>Password</label>
+  <input name="password" type="password" required>
+  <button type="submit">{{ 'Create account' if register else 'Sign in' }}</button>
+</form>
+<p>
+  {% if register %}
+    <a href="{{ url_for('auth.login_page') }}">Already have an account? Log in</a>
+  {% else %}
+    <a href="{{ url_for('auth.register_page') }}">Create an account</a>
+  {% endif %}
+</p>
+{% endblock %}
