@@ -1,0 +1,11 @@
+Date,Category,Description,Amount,Type
+2025-11-01,Salary,November Salary,50000,Income
+2025-11-03,Food,Lunch at Cafe,250,Expense
+2025-11-04,Transport,Uber Ride,120,Expense
+2025-11-06,Investment,Stock Dividend,1500,Income
+2025-11-07,Entertainment,Movie Tickets,500,Expense
+2025-11-10,Shopping,New Shoes,3000,Expense
+2025-11-15,Salary,Half-month Bonus,2000,Income
+2025-11-18,Utilities,Electricity Bill,1200,Expense
+2025-11-20,Groceries,Monthly Grocery,4000,Expense
+2025-11-25,Other,Gift Received,1000,Income

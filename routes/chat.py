@@ -1,5 +1,5 @@
 # chat.py
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, session, render_template, redirect, url_for
 from datetime import date, timedelta
 from services.supabase_client import authed_postgrest, get_supabase
 from services.gemini_client import ask_gemini
@@ -26,6 +26,13 @@ def get_pg_client_or_redirect():
             return pg
         else:
             raise e
+
+@chat_bp.get("/")
+def chat_page():
+    # Require login to access chat UI
+    if "user" not in session:
+        return redirect(url_for("auth.login_page"))
+    return render_template("chat.html")
 
 @chat_bp.post("/ask")
 def ask():

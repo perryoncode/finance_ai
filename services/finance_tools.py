@@ -65,3 +65,65 @@ def to_transactions(df: pd.DataFrame, user_id: str):
             "category_name": r.get("category") or None,
         })
     return rows
+
+def normalize_budget_csv(df: pd.DataFrame) -> pd.DataFrame:
+    # unify column names
+    df.columns = [c.strip().lower() for c in df.columns]
+
+    # rename if needed
+    aliases = {
+        "budget": "amount",
+        "limit": "amount",
+        "category_name": "category",
+    }
+    df = df.rename(columns={k: v for k, v in aliases.items() if k in df.columns})
+
+    # Ensure columns
+    required = ["category", "amount", "month"]
+    for col in required:
+        if col not in df.columns:
+            df[col] = None
+
+    # Clean category
+    df["category"] = df["category"].astype(str).str.strip().str.title()
+
+    # Amount numeric (same style as transactions)
+    def to_amount(x):
+        try:
+            return float(str(x).replace(",", "").replace("₹", "").strip())
+        except:
+            return None
+
+    df["amount"] = df["amount"].apply(to_amount)
+
+    # Convert Month (YYYY-MM) → YYYY-MM-01 (date)
+    def parse_month(value):
+        try:
+            # Input can be "2025-11" or "2025-11-01"
+            s = str(value)
+            parts = s.split("-")
+            if len(parts) == 2:  # YYYY-MM
+                return f"{parts[0]}-{parts[1]}-01"
+            parsed = parse_date(s).date()
+            return parsed.isoformat()
+        except:
+            return None
+
+    df["month"] = df["month"].apply(parse_month)
+
+    return df
+
+
+def to_budgets(df: pd.DataFrame, user_id: str):
+    rows = []
+    for _, r in df.iterrows():
+        if not r["category"] or r["amount"] is None or not r["month"]:
+            continue
+
+        rows.append({
+            "user_id": user_id,
+            "category_name": r["category"],
+            "month": r["month"],       # date string (YYYY-MM-01)
+            "amount": r["amount"],      # numeric
+        })
+    return rows
