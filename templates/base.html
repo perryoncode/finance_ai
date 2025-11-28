@@ -1,32 +1,43 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Finance AI{% endblock %}</title>
+  <title>{% block title %}Finnova{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+
 <body>
-<nav class="nav">
-  <a href="{{ url_for('dashboard.dashboard_page') }}">Dashboard</a>
-  <a href="{{ url_for('auth.login_page') }}">Login</a>
-  <a href="{{ url_for('auth.logout') }}">Logout</a>
-</nav>
+  <nav class="nav justify-content-between">
+    <div class="patch1 "><a href="{{ url_for('dashboard.dashboard_page') }}">Dashboard</a>
+      <a href="{{ url_for('chat.chat_page') }}">Chat</a>
+    </div>
+    <div class="patch2 "><a href="{{ url_for('auth.login_page') }}">Login</a>
+      <a href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+  </nav>
 
-<main class="container">
-  {% with messages = get_flashed_messages(with_categories=True) %}
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=True) %}
     {% if messages %}
-      <ul class="flash">
-        {% for cat, msg in messages %}
-          <li class="{{ cat }}">{{ msg }}</li>
-        {% endfor %}
-      </ul>
+    <ul class="flash">
+      {% for cat, msg in messages %}
+      <li class="{{ cat }}">{{ msg }}</li>
+      {% endfor %}
+    </ul>
     {% endif %}
-  {% endwith %}
+    {% endwith %}
 
-  {% block content %}{% endblock %}
-</main>
+    {% block content %}{% endblock %}
+  </main>
 
-<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>

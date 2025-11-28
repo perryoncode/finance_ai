@@ -1,19 +1,39 @@
 {% extends "base.html" %}
-{% block title %}Login · Finance AI{% endblock %}
+{% block title %}{{ 'Register' if register else 'Login' }} · Finance AI{% endblock %}
+
 {% block content %}
-<h1>{{ 'Register' if register else 'Login' }}</h1>
-<form method="post" action="{{ url_for('auth.register_post' if register else 'auth.login_post') }}">
-  <label>Email</label>
-  <input name="email" type="email" required>
-  <label>Password</label>
-  <input name="password" type="password" required>
-  <button type="submit">{{ 'Create account' if register else 'Sign in' }}</button>
-</form>
-<p>
-  {% if register %}
-    <a href="{{ url_for('auth.login_page') }}">Already have an account? Log in</a>
-  {% else %}
-    <a href="{{ url_for('auth.register_page') }}">Create an account</a>
-  {% endif %}
-</p>
+<div class="d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 200px);">
+  <div class="card bg-dark text-light shadow-lg" style="width: 100%; max-width: 400px;">
+    <div class="card-body p-4">
+      <h2 class="card-title text-center mb-1">{{ 'Create Account' if register else 'Welcome Back' }}</h2>
+      <p class="text-center text-muted mb-4">{{ 'Join Finance AI' if register else 'Sign in to continue' }}</p>
+      
+      <form method="post" action="{{ url_for('auth.register_post' if register else 'auth.login_post') }}">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" name="email" type="email" class="form-control bg-dark text-light border-secondary" placeholder="you@example.com" required autocomplete="email">
+        </div>
+        
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input id="password" name="password" type="password" class="form-control bg-dark text-light border-secondary" placeholder="Enter password" required autocomplete="{{ 'new-password' if register else 'current-password' }}">
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100 mt-3">
+          {{ 'Create Account' if register else 'Sign In' }}
+        </button>
+      </form>
+      
+      <hr class="border-secondary my-4">
+      
+      <p class="text-center text-muted mb-0">
+        {% if register %}
+          Already have an account? <a href="{{ url_for('auth.login_page') }}" class="text-primary text-decoration-none">Log in</a>
+        {% else %}
+          Don't have an account? <a href="{{ url_for('auth.register_page') }}" class="text-primary text-decoration-none">Create one</a>
+        {% endif %}
+      </p>
+    </div>
+  </div>
+</div>
 {% endblock %}
